@@ -1,0 +1,14 @@
+# IGNORE MASSIVE FOLDER
+fidle-env/
+fidle-datasets/
+fidle-notebook/
+BDDarchive/
+nnClasses-DataBase-IMG/
+jpg+xyz_gen/
+.vscode/
+
+# iGNORE SCRIPT (for now)
+*.ipynb
+
+# IGNORE MOD (for nom)
+mod/
