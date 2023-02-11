@@ -3,8 +3,6 @@
 
 # %%
 import os,sys
-workpath = sys.path[0]
-#print (workpath)
 
 import random as r
 import numpy as np
@@ -18,52 +16,52 @@ from skimage.filters import gaussian
 # ## Modif Image
 
 # %%
-def move_matrix (img , x_up = 0 , x_down = 0 , x_left = 0, x_right = 0):
+def move_matrix (matrix  , x_up = 0 , x_down = 0 , x_left = 0, x_right = 0):
     """Renvoi l'image déplacée suivant les 4 directions """
     
-    px , py = np.shape(img)
+    px , py = np.shape(matrix)
     h = int (abs ( x_up - x_down ))
     v = int (abs ( x_right - x_left ))
     
     #Sous-fonctions de déplacement
-    def up(img , x_up : int):
-        deplaced_img = np.zeros ( (px , py) , dtype = float)
+    def up(matrix , x_up : int):
+        deplaced_matrix = np.zeros ( (px , py) , dtype = float)
         for i in range(px - x_up):
-            deplaced_img[i] = img[i + x_up]
-        return deplaced_img
+            deplaced_matrix[i] = matrix[i + x_up]
+        return deplaced_matrix
     
-    def down(img , x_down: int):
-        deplaced_img = np.zeros ( (px , py) , dtype = float)
+    def down(matrix , x_down: int):
+        deplaced_matrix = np.zeros ( (px , py) , dtype = float)
         for i in range(x_down, px):
-            deplaced_img[i] = img[i - x_down]
-        return deplaced_img
+            deplaced_matrix[i] = matrix[i - x_down]
+        return deplaced_matrix
     
-    def left(img , x_left : int):
-        deplaced_img = np.zeros ( (px , py) , dtype = float)
+    def left(matrix , x_left : int):
+        deplaced_matrix = np.zeros ( (px , py) , dtype = float)
         for i in range(px):
             for j in range (py - x_left):
-                deplaced_img[i][j] = img[i][j + x_left]
-        return deplaced_img
+                deplaced_matrix[i][j] = matrix[i][j + x_left]
+        return deplaced_matrix
     
-    def right(img , x_right : int):
-        deplaced_img = np.zeros ( (px , py) , dtype = float)
+    def right(matrix , x_right : int):
+        deplaced_matrix = np.zeros ( (px , py) , dtype = float)
         for i in range(px):
             for j in range (x_right, py):
-                deplaced_img[i][j] = img[i][j - x_right]
-        return deplaced_img
+                deplaced_matrix[i][j] = matrix[i][j - x_right]
+        return deplaced_matrix
     
     #Choix du cadran
     if x_up >= x_down and x_right >= x_left :
-        return up  (right(img,v),h)
+        return up  (right(matrix,v),h)
     
     if x_up <= x_down and x_right >= x_left :
-        return down(right(img,v),h)
+        return down(right(matrix,v),h)
     
     if x_up >= x_down and x_right <= x_left :
-        return up  (left (img,v),h)
+        return up  (left (matrix,v),h)
     
     if x_up <= x_down and x_right <= x_left :
-        return down(left (img,v),h)
+        return down(left (matrix,v),h)
     
 def frame_NP(matrix):
     """Renvoi les indices des lignes et colonnes du cadre contenant la particule""" 
@@ -130,14 +128,14 @@ def draw_frame ( matrix):
                 f_matrix[i][j] = 1.0
     return f_matrix
 
-def noise (M):
-    px , py = np.shape(M)
-    Mnoise = np.copy(M)
+def noise (matrix):
+    px , py = np.shape(matrix)
+    noised_matrix = np.copy(matrix)
     for i in range (px):
         for j in range (py):
-            if M[i][j] < 0.8:
-                Mnoise[i][j] = r.random()
-    return  Mnoise 
+            if matrix[i][j] < 0.8:
+                noised_matrix[i][j] = r.random()
+    return  noised_matrix 
 
 # %%
 def light_modif (matrix):
@@ -187,12 +185,12 @@ def hard_modif (matrix , n = True):
 # ## Modif BDD
 
 # %%
-def empty_BDD(BDDpath):
+def empty_BDD(BDDpath : str):
     for img_name in os.listdir(BDDpath):
         os.remove(f'{BDDpath}\{img_name}')
 
 # %%
-def augmente_BDD (BDDpath , mode , img2add = 0, id2exlude = []):
+def augmente_BDD (BDDpath : str, mode : bool, img2add = 0, id2exlude = []):
     
     BDDcontent = os.listdir(BDDpath)
     Nbimg = len(BDDcontent)
@@ -205,7 +203,6 @@ def augmente_BDD (BDDpath , mode , img2add = 0, id2exlude = []):
             if int(img_name[0:3]) not in id2exlude:
                 img_matrix = io.imread (f'{BDDpath}\{img_name}' , as_gray = True)
                 img_name = img_name[:-4] + f'µ{i}.jpg'
-            
                 m_img_matrix = light_modif(img_matrix)
                 plt.imsave (f'{BDDpath}\{img_name}' , m_img_matrix , cmap = 'gray' , format = 'jpg')
                 i+=1 
@@ -217,28 +214,27 @@ def augmente_BDD (BDDpath , mode , img2add = 0, id2exlude = []):
 
 # %%
 def resize_BDD (BDDpath : str , size : int):
-    """Entrée : nom de la BDD à resize , taille de l'image carré de sortie .
-    Sortie : None , Stockes les images dans un dossier crée à cet effet"""
+    """Entrée : chemin de la BDD , taille de l'image carré de sortie .
+    Sortie : None , Stockes les images dans un dossier crée à cet effet, dans le même dossier que le fichier source """
     
     BDD_name = str.split (BDDpath , '\\')[-1]
+    root = BDDpath[:-len(BDD_name) - 1] 
     BDDcontent = os.listdir(BDDpath)
     
-    if not os.path.exists(f'{workpath}\{BDD_name}({size})'):  
-        os.makedirs(f'{workpath}\{BDD_name}({size})')
+    if not os.path.exists(f'{root}\{BDD_name}({size})'):  
+        os.makedirs(f'{root}\{BDD_name}({size})')
     
-    if len(os.listdir(f'{workpath}\{BDD_name}({size})')) == 0:
-    
+    if len(os.listdir(f'{root}\{BDD_name}({size})')) == 0:
         for img_name in BDDcontent :
-        
             img = io.imread(f'{BDDpath}\{img_name}' , as_gray = True)
             im_red = t.resize(img, (size,size))
-            plt.imsave(f'{workpath}\{BDD_name}({size})\{img_name}' , im_red , cmap = 'gray' , format='jpg')
-            
+            plt.imsave(f'{root}\{BDD_name}({size})\{img_name}' , im_red , cmap = 'gray' , format='jpg')         
 
 # %%
-def real_BDD (BDDpath , n = True):
+def real_BDD (BDDpath : str , n = True):
     
     BDD_name = str.split (BDDpath , '\\')[-1]
+    root = BDDpath[:-len(BDD_name) - 1]
     BDDcontent = os.listdir(BDDpath)
     
     if n==True:
@@ -246,14 +242,16 @@ def real_BDD (BDDpath , n = True):
     else:
         suffix = '-no-noise'
     
-    if not os.path.exists(f'{workpath}\{BDD_name}(real{suffix})'):  
-        os.makedirs(f'{workpath}\{BDD_name}(real{suffix})')
+    if not os.path.exists(f'{root}\{BDD_name}(real{suffix})'):  
+        os.makedirs(f'{root}\{BDD_name}(real{suffix})')
     
-    if len(os.listdir(f'{workpath}\{BDD_name}(real{suffix})')) == 0:
+    if len(os.listdir(f'{root}\{BDD_name}(real{suffix})')) == 0:
         for img_name in BDDcontent :
-            
             img = io.imread(f'{BDDpath}\{img_name}' , as_gray = True)
             m_img = hard_modif(img,n)
-            plt.imsave(f'{workpath}\{BDD_name}(real{suffix})\{img_name}' , m_img , cmap = 'gray' , format='jpg')
+            plt.imsave(f'{root}\{BDD_name}(real{suffix})\{img_name}' , m_img , cmap = 'gray' , format='jpg')
+
+# %%
+
 
 

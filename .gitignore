@@ -7,6 +7,9 @@ nnClasses-DataBase-IMG/
 jpg+xyz_gen/
 .vscode/
 
+# Part 3
+foule/
+
 # iGNORE SCRIPT (for now)
 full convolution.ipynb
 read dataset (V1).ipynb
