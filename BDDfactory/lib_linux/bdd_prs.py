@@ -212,7 +212,7 @@ def hard_modif (matrix , n = True):
 # %%
 def empty_BDD(BDDpath : str):
     for img_name in os.listdir(BDDpath):
-        os.remove(f'{BDDpath}\{img_name}')
+        os.remove(f'{BDDpath}/{img_name}')
 
 # %%
 def augmente_BDD (BDDpath : str, mode : bool, img2add = 0, id2exlude = []):
@@ -226,39 +226,39 @@ def augmente_BDD (BDDpath : str, mode : bool, img2add = 0, id2exlude = []):
             random_index = r.randrange(0 , Nbimg)
             img_name = BDDcontent[random_index]
             if int(img_name[0:3]) not in id2exlude:
-                img_matrix = io.imread (f'{BDDpath}\{img_name}' , as_gray = True)
+                img_matrix = io.imread (f'{BDDpath}/{img_name}' , as_gray = True)
                 img_name = img_name[:-4] + f'µ{i}.jpg'
                 m_img_matrix = light_modif(img_matrix , move = False)
-                plt.imsave (f'{BDDpath}\{img_name}' , m_img_matrix , cmap = 'gray' , format = 'jpg')
+                plt.imsave (f'{BDDpath}/{img_name}' , m_img_matrix , cmap = 'gray' , format = 'jpg')
                 i+=1 
         
     if mode == False:
         for img_name in BDDcontent:
             if 'µ' in img_name:
-                os.remove(f'{BDDpath}\{img_name}')
+                os.remove(f'{BDDpath}/{img_name}')
 
 # %%
 def resize_BDD (BDDpath : str , size : int):
     """Entrée : chemin de la BDD , taille de l'image carré de sortie .
     Sortie : None , Stockes les images dans un dossier crée à cet effet, dans le même dossier que le fichier source """
     
-    BDD_name = str.split (BDDpath , '\\')[-1]
+    BDD_name = str.split (BDDpath , '/')[-1]
     root = BDDpath[:-len(BDD_name) - 1] 
     BDDcontent = os.listdir(BDDpath)
     
-    if not os.path.exists(f'{root}\{BDD_name}({size})'):  
-        os.makedirs(f'{root}\{BDD_name}({size})')
+    if not os.path.exists(f'{root}/{BDD_name}({size})'):  
+        os.makedirs(f'{root}/{BDD_name}({size})')
     
-    if len(os.listdir(f'{root}\{BDD_name}({size})')) == 0:
+    if len(os.listdir(f'{root}/{BDD_name}({size})')) == 0:
         for img_name in BDDcontent :
-            img = io.imread(f'{BDDpath}\{img_name}' , as_gray = True)
+            img = io.imread(f'{BDDpath}/{img_name}' , as_gray = True)
             im_red = t.resize(img, (size,size))
-            plt.imsave(f'{root}\{BDD_name}({size})\{img_name}' , im_red , cmap = 'gray' , format='jpg')         
+            plt.imsave(f'{root}/{BDD_name}({size})/{img_name}' , im_red , cmap = 'gray' , format='jpg')         
 
 # %%
 def real_BDD (BDDpath : str , n = True):
     
-    BDD_name = str.split (BDDpath , '\\')[-1]
+    BDD_name = str.split (BDDpath , '/')[-1]
     root = BDDpath[:-len(BDD_name) - 1]
     BDDcontent = os.listdir(BDDpath)
     
@@ -267,16 +267,13 @@ def real_BDD (BDDpath : str , n = True):
     else:
         suffix = '-no-noise'
     
-    if not os.path.exists(f'{root}\{BDD_name}(real{suffix})'):  
-        os.makedirs(f'{root}\{BDD_name}(real{suffix})')
+    if not os.path.exists(f'{root}/{BDD_name}(real{suffix})'):  
+        os.makedirs(f'{root}/{BDD_name}(real{suffix})')
     
-    if len(os.listdir(f'{root}\{BDD_name}(real{suffix})')) == 0:
+    if len(os.listdir(f'{root}/{BDD_name}(real{suffix})')) == 0:
         for img_name in BDDcontent :
-            img = io.imread(f'{BDDpath}\{img_name}' , as_gray = True)
+            img = io.imread(f'{BDDpath}/{img_name}' , as_gray = True)
             m_img = hard_modif(img,n)
-            plt.imsave(f'{root}\{BDD_name}(real{suffix})\{img_name}' , m_img , cmap = 'gray' , format='jpg')
-
-# %%
-
+            plt.imsave(f'{root}/{BDD_name}(real{suffix})/{img_name}' , m_img , cmap = 'gray' , format='jpg')
 
 

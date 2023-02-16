@@ -62,13 +62,13 @@ def distrib_BDD (BDDpath : str , result = True):
 #             if c not in banned_class and fill_track[c] >= New_distrib[c] :
 #                 banned_class.append(c)
 #     
-#     BDDname = str.split(BDDpath,'\\')[-1]
+#     BDDname = str.split(BDDpath,'//')[-1]
 #     newBDDname = f'{BDDname}(equalized)'
 #     
-#     if not os.path.exists(f'{bddpath}\{newBDDname}'):
-#         os.mkdir(f'{bddpath}\{newBDDname}')
+#     if not os.path.exists(f'{bddpath}/{newBDDname}'):
+#         os.mkdir(f'{bddpath}/{newBDDname}')
 #     
-#     if len(os.listdir(f'{bddpath}\{newBDDname}')) == 0:
+#     if len(os.listdir(f'{bddpath}/{newBDDname}')) == 0:
 #         
 #         ImgRemoved = 0
 #         while len(banned_class) < Nclass:
@@ -78,13 +78,13 @@ def distrib_BDD (BDDpath : str , result = True):
 #             
 #             if ID not in banned_class:
 #                 img = BDDcontent[random_index]
-#                 copyfile ( f'{BDDpath}\{img}' , f'{bddpath}\{newBDDname}\{img}')
+#                 copyfile ( f'{BDDpath}/{img}' , f'{bddpath}/{newBDDname}/{img}')
 #             
 #                 BDDcontent.pop(random_index)
 #                 ImgRemoved += 1
 #                 fill_track[ID] += 1
 #                  
-#         augmente_BDD (f'{bddpath}\{newBDDname}' , True , Nbimg - len(os.listdir(f'{bddpath}\{newBDDname}')))
+#         augmente_BDD (f'{bddpath}/{newBDDname}' , True , Nbimg - len(os.listdir(f'{bddpath}/{newBDDname}')))
 
 # %%
 def custom_BDD(BDDpath : str , equalize = False):
@@ -92,7 +92,7 @@ def custom_BDD(BDDpath : str , equalize = False):
     Entrée : chemin BDD;
     Sortie : None, création BDD dans le même fichier que la BDD source"""
     
-    BDD_name = str.split(BDDpath,'\\')[-1]
+    BDD_name = str.split(BDDpath,'/')[-1]
     root = BDDpath[:-len(BDD_name) - 1] 
     
     if equalize == False:
@@ -124,10 +124,10 @@ def custom_BDD(BDDpath : str , equalize = False):
         newBDDname = BDD_name + '(equalized)'
         prop = np.ones(Nclass , dtype = np.float16) * (1/Nclass)
     
-    if not os.path.exists(f'{root}\{newBDDname}'):
-        os.makedirs(f'{root}\{newBDDname}')
+    if not os.path.exists(f'{root}/{newBDDname}'):
+        os.makedirs(f'{root}/{newBDDname}')
         
-    if len(os.listdir(f'{root}\{newBDDname}')) == 0:
+    if len(os.listdir(f'{root}/{newBDDname}')) == 0:
     
         distrib , BDDcontent , N = distrib_BDD(BDDpath,result = False)
         BDDcontent = sorted(BDDcontent)
@@ -140,9 +140,9 @@ def custom_BDD(BDDpath : str , equalize = False):
         for k in range(Nclass):
             if round(N*prop[k] - distrib[k]) >= 0:
                 for img_name in BDDcontent_class[k]:
-                    copyfile (f'{BDDpath}\{img_name}' , f'{root}\{newBDDname}\{img_name}')
+                    copyfile (f'{BDDpath}/{img_name}' , f'{root}/{newBDDname}/{img_name}')
                 id2exclude = np.delete ( np.arange(1,Nclass+1) , k )
-                augmente_BDD ( f'{root}\{newBDDname}' , True , round(N*prop[k]) - distrib[k] , id2exclude)
+                augmente_BDD ( f'{root}/{newBDDname}' , True , round(N*prop[k]) - distrib[k] , id2exclude)
             
             else:
                 stock = BDDcontent_class[k][:]
@@ -150,7 +150,7 @@ def custom_BDD(BDDpath : str , equalize = False):
                 while i< round(N*prop[k]):
                     random_index = r.randrange(0 , len(stock))
                     img_name = stock[random_index]
-                    copyfile (f'{BDDpath}\{img_name}', f'{root}\{newBDDname}\{img_name}')
+                    copyfile (f'{BDDpath}/{img_name}', f'{root}/{newBDDname}/{img_name}')
                     stock.pop(random_index)
                     i = i+1
 
