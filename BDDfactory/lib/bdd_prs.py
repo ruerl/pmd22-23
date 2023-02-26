@@ -78,7 +78,7 @@ def frame_NP(matrix):
         j = 0
         while j < py and stop == False:
             if matrix[i][j] > 0.1:
-                i_start = i-1
+                i_start = i
                 stop = True
             j += 1
         i += 1
@@ -89,7 +89,7 @@ def frame_NP(matrix):
         j = 0
         while j < py and stop == False:
             if matrix[i][j] > 0.1:
-                i_end = i+1
+                i_end = i
                 stop = True
             j += 1
         i -= 1
@@ -100,7 +100,7 @@ def frame_NP(matrix):
         i = 0
         while i < px and stop == False:
             if matrix[i][j] > 0.1:
-                j_start = j - 1
+                j_start = j
                 stop = True
             i += 1
         j += 1
@@ -111,7 +111,7 @@ def frame_NP(matrix):
         i = 0
         while i < px and stop == False:
             if matrix[i][j] > 0.1:
-                j_end = j + 1
+                j_end = j
                 stop = True
             i += 1
         j -= 1   

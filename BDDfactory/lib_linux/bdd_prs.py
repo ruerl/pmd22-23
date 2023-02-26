@@ -78,7 +78,7 @@ def frame_NP(matrix):
         j = 0
         while j < py and stop == False:
             if matrix[i][j] > 0.1:
-                i_start = i-1
+                i_start = i
                 stop = True
             j += 1
         i += 1
@@ -89,7 +89,7 @@ def frame_NP(matrix):
         j = 0
         while j < py and stop == False:
             if matrix[i][j] > 0.1:
-                i_end = i+1
+                i_end = i
                 stop = True
             j += 1
         i -= 1
@@ -100,7 +100,7 @@ def frame_NP(matrix):
         i = 0
         while i < px and stop == False:
             if matrix[i][j] > 0.1:
-                j_start = j - 1
+                j_start = j
                 stop = True
             i += 1
         j += 1
@@ -111,7 +111,7 @@ def frame_NP(matrix):
         i = 0
         while i < px and stop == False:
             if matrix[i][j] > 0.1:
-                j_end = j + 1
+                j_end = j 
                 stop = True
             i += 1
         j -= 1   
@@ -275,5 +275,23 @@ def real_BDD (BDDpath : str , n = True):
             img = io.imread(f'{BDDpath}/{img_name}' , as_gray = True)
             m_img = hard_modif(img,n)
             plt.imsave(f'{root}/{BDD_name}(real{suffix})/{img_name}' , m_img , cmap = 'gray' , format='jpg')
+
+# %%
+def light_BDD (BDDpath):
+
+    BDD_name = str.split (BDDpath , '/')[-1]
+    root = BDDpath[:-len(BDD_name) - 1]
+    BDDcontent = os.listdir(BDDpath)
+    
+    if not os.path.exists(f'{root}/{BDD_name}(light))'):  
+        os.makedirs(f'{root}/{BDD_name}(light)')
+    
+    if len(os.listdir(f'{root}/{BDD_name}(light)')) == 0:
+        for img_name in BDDcontent :
+            img = io.imread(f'{BDDpath}/{img_name}' , as_gray = True)
+            m_img = light_modif(img)
+            plt.imsave(f'{root}/{BDD_name}(light)/{img_name}' , m_img , cmap = 'gray' , format='jpg')
+
+    
 
 
