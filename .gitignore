@@ -6,6 +6,10 @@ BDDarchive/
 nnClasses-DataBase-IMG/
 jpg+xyz_gen/
 .vscode/
+datasheet/
+fidle-master/
+GTSRB/
+qq_img_relle/
 
 # Part 3
 foule/
@@ -16,6 +20,8 @@ read dataset (V1).ipynb
 script_test.ipynb
 test full scale.ipynb
 draft.ipynb
+get-pip.py
+Preparation_de_donnee.ipynb
 
 # IGNORE MOD (for nom)
 mod/
