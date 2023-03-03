@@ -22,6 +22,9 @@ test full scale.ipynb
 draft.ipynb
 get-pip.py
 Preparation_de_donnee.ipynb
+.ipynb*
+events*
+*checkpoints*
 
 # IGNORE MOD (for nom)
 mod/
