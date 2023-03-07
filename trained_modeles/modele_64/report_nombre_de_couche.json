@@ -1,0 +1,29 @@
+{
+    "output": {
+        "Dataset": [
+            "img_64"
+        ],
+        "Size": [
+            20040
+        ],
+        "create_model1_100_Accuracy": [
+            90.19461274147034
+        ],
+        "create_model1_100_Duration": [
+            433.1511142253876
+        ],
+        "create_model2_100_Accuracy": [
+            92.66467094421387
+        ],
+        "create_model2_100_Duration": [
+            452.12524366378784
+        ],
+        "create_model3_100_Accuracy": [
+            91.64171814918518
+        ],
+        "create_model3_100_Duration": [
+            445.21680307388306
+        ]
+    },
+    "description": "scale=1 batch_size=64 epochs=16 data_aug=False"
+}
