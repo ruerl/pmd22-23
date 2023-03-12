@@ -1,0 +1,35 @@
+{
+    "output": {
+        "Dataset": [
+            "img_64"
+        ],
+        "Size": [
+            10020
+        ],
+        "create_model1_DNNtanh_adam_Accuracy": [
+            92.01596975326538
+        ],
+        "create_model1_DNNtanh_adam_Duration": [
+            246.04514908790588
+        ],
+        "create_model1_DNNtanh_Adamax_Accuracy": [
+            74.70059990882874
+        ],
+        "create_model1_DNNtanh_Adamax_Duration": [
+            248.25183820724487
+        ],
+        "create_model1_DNNtanh_Nadam_Accuracy": [
+            92.66467094421387
+        ],
+        "create_model1_DNNtanh_Nadam_Duration": [
+            274.5429663658142
+        ],
+        "create_model1_DNNtanh_RMSprop_Accuracy": [
+            87.52495050430298
+        ],
+        "create_model1_DNNtanh_RMSprop_Duration": [
+            258.8914272785187
+        ]
+    },
+    "description": "scale=0.5 batch_size=64 epochs=16 data_aug=False"
+}

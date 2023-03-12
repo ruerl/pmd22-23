@@ -1,0 +1,53 @@
+{
+    "output": {
+        "Dataset": [
+            "img_64"
+        ],
+        "Size": [
+            20040
+        ],
+        "create_model1_Accuracy": [
+            96.78143858909607
+        ],
+        "create_model1_Duration": [
+            469.0032842159271
+        ],
+        "create_model1_DNNsigmod_Accuracy": [
+            95.53393125534058
+        ],
+        "create_model1_DNNsigmod_Duration": [
+            465.9784948825836
+        ],
+        "create_model1_DNNtanh_Accuracy": [
+            97.43013978004456
+        ],
+        "create_model1_DNNtanh_Duration": [
+            457.11533093452454
+        ],
+        "create_model1_DNNsoftsign_Accuracy": [
+            95.68363428115845
+        ],
+        "create_model1_DNNsoftsign_Duration": [
+            513.7436234951019
+        ],
+        "create_model1_DNNelu_Accuracy": [
+            96.60678505897522
+        ],
+        "create_model1_DNNelu_Duration": [
+            470.4716019630432
+        ],
+        "create_model1_DNNselu_Accuracy": [
+            95.25948166847229
+        ],
+        "create_model1_DNNselu_Duration": [
+            480.6903374195099
+        ],
+        "create_model1_DNNsoftplus_Accuracy": [
+            96.05788588523865
+        ],
+        "create_model1_DNNsoftplus_Duration": [
+            473.3599383831024
+        ]
+    },
+    "description": "scale=1 batch_size=64 epochs=16 data_aug=False"
+}

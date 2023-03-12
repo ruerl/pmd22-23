@@ -1,0 +1,65 @@
+{
+    "output": {
+        "Dataset": [
+            "img_64"
+        ],
+        "Size": [
+            10022
+        ],
+        "create_model2_100_Accuracy": [
+            89.22155499458313
+        ],
+        "create_model2_100_Duration": [
+            198.47210884094238
+        ],
+        "create_model2_100_loss": [
+            0.29137542843818665
+        ],
+        "create_model2_300_Accuracy": [
+            88.55621814727783
+        ],
+        "create_model2_300_Duration": [
+            208.25134348869324
+        ],
+        "create_model2_300_loss": [
+            0.2895858585834503
+        ],
+        "create_model2_500_Accuracy": [
+            89.42115902900696
+        ],
+        "create_model2_500_Duration": [
+            221.5065577030182
+        ],
+        "create_model2_500_loss": [
+            0.27527061104774475
+        ],
+        "create_model2_700_Accuracy": [
+            88.75582218170166
+        ],
+        "create_model2_700_Duration": [
+            268.0949547290802
+        ],
+        "create_model2_700_loss": [
+            0.3073723018169403
+        ],
+        "create_model2_900_Accuracy": [
+            88.29008936882019
+        ],
+        "create_model2_900_Duration": [
+            218.2726855278015
+        ],
+        "create_model2_900_loss": [
+            0.3173997700214386
+        ],
+        "create_model2_1000_Accuracy": [
+            90.88489413261414
+        ],
+        "create_model2_1000_Duration": [
+            233.25771927833557
+        ],
+        "create_model2_1000_loss": [
+            0.27292999625205994
+        ]
+    },
+    "description": "scale=0.5 batch_size=64 epochs=16 data_aug=False"
+}
