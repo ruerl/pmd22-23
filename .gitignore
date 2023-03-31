@@ -14,6 +14,8 @@ qq_img_relle/
 # Part 3
 foule/
 unnoise/
+*.jpg
+*.png
 
 # iGNORE SCRIPT (for now)
 full convolution.ipynb
