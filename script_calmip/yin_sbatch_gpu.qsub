@@ -1,0 +1,51 @@
+#!/bin/bash
+#SBATCH -J full_convolution_auto
+#SBATCH -N 1 ## nombre de noeud
+#SBATCH -n 36 ## nombre de coeur total
+#SBATCH --ntasks-per-node=36  ##nombre de coeur / noeud
+#SBATCH --ntasks-per-core=1 ##nombre de tache par coeur
+#SBATCH --gres=gpu:1
+#SBATCH --mem=20000
+#SBATCH --time=01:00:00  ##temps , ici 1h
+# ------------------------
+
+
+# Compiler environment
+# ------------------------------
+module purge
+module load python/3.9.5
+module purge
+module load conda/4.9.2
+export CONDA_ENVS_PATH=/tmpdir/$USER/CONDA/envs
+export CONDA_PKGS_DIRS=/tmpdir/$USER/CONDA/pkgs
+# ------------------------------
+
+# Activer environmenent Conda
+# ------------------------------
+conda init bash
+conda activate working-env
+
+# ------------------------------
+
+## Lancement du calul : positionnement dans la catalogue ou se trouve les fichiers de configuration
+echo "-----------------------------------"
+echo "Job START - $(date)"
+echo "nbre tasks = " $SLURM_NTASKS
+echo "ID -JOB" $SLURM_JOBID
+# ------------------------------
+
+# A MODIFIER POUR CHAQUE CALCUL , définition des variables
+# ------------------------------
+working_dic='working-env'
+# ------------------------------
+
+
+#création du répertoire de travail et on se positionne dans le répertoire de travail
+cd /tmpdir/${USER}/${working_dic}
+##repertoire_sortie_jupyter='repertoire_sortie_jupyter'
+##mkdir(repertoire_sortie_jupyter)
+
+# LANCEMENT DU CALCUL
+# ------------------------------
+python full_convolution-auto.py   
+#######################################fin du script
