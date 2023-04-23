@@ -9,7 +9,7 @@
 ###le datagen reste toujours "non" avant que je fais un fonction pour que le data d'image est en 4 dimension pour adapter le fonction de dataugmentation de keras
 # ## Import Python Module
 
-# In[ ]:
+# In[2]:
 
 
 #gestion fichier modeles pythons
@@ -40,7 +40,8 @@ from tensorflow.keras import layers
 from tensorflow.keras import activations
 
 
-# In[ ]:
+
+# In[3]:
 
 
 #vérification d'existance de path, pas nécessaire à executer
@@ -357,17 +358,23 @@ def multi_run(datasets, models, with_datagen = [False],
         
         # ---- Read dataset
         img_train,img_test,ID_train,ID_test, d_size, img_test_final, ID_test_final = read_dataset(d_name[0])
+        lx,ly = np.shape(img_train)[1:]
+        ## je ne comprend pas mais dans calmip : tensorflow 2.4, il faut que l'image aie une chaine, donc il faut ajouter une dimension a la fin d'image sans changer les donnee. 
+        img_train = tf.expand_dims(img_train, axis=-1)
+        img_test = tf.expand_dims(img_test, axis=-1)
+        img_test_final = tf.expand_dims(img_test_final, axis=-1)
+        print(f'shape of image set is {np.shape(img_train)}')
         imgs = [img_train,img_test,ID_train,ID_test, img_test_final, ID_test_final]
         d_name = d_name[1]
         output['Dataset'].append(d_name)
         output['Size'].append(d_size)
-        print(len(img_train))
-        print(len(ID_train))
+        print(f"nombre d'image d'entrainement est{len(img_train)}")
+        print(f"nombre d'ID d'entrainement est{len(ID_train)}")
         # ---- Rescale c'est pas vraiment necessaire
         ##img_train,ID_train,img_test,ID_test = pwk.rescale_dataset(img_train,ID_train,img_test,ID_test, scale=scale)
         
         # ---- Get the shape
-        (n,lx,ly) = img_train.shape
+        (n,lx,ly) = img_train.shape[:-1]
 
         # ---- For each model
         for m_function in models:
@@ -546,33 +553,39 @@ show_report(file)
 # In[ ]:
 
 
+"""
 models = os.listdir(f'{run_dir}\models_{tag_id}')
 print(models) # tu choisis un des modeles listés et le mettre dans le variable model_choisit au dessous.
+"""
 
 
 # In[ ]:
 
 
+"""
 model_choisit = 'model_wdg_img_64_e15bs64sc0.5code2_700_11234.h5'
 model_choisit = f'{run_dir}\models_{tag_id}\{model_choisit}'
 model_evaluated = tf.keras.models.load_model(model_choisit) #load ton model choisite, tu peux aussi copie coller la chemin absolute ou le model est stocké
+"""
 
 
 # In[ ]:
 
 
-model_evaluated.summary() # son structure
+# model_evaluated.summary() # son structure
 
 
 # In[ ]:
 
 
+"""
 img_test_final = imgs[4]
 ID_test_final = imgs[5]
 score = model_evaluated.evaluate(img_test_final, ID_test_final, verbose=0) #evaluation de ce models
 
 print('Test loss     :', score[0])
 print('Test accuracy :', score[1])
+"""
 
 
 # ## erreurs
@@ -580,16 +593,18 @@ print('Test accuracy :', score[1])
 # In[ ]:
 
 
+"""
 y_sigmoid = model_evaluated.predict(img_test_final)
 ID_pred    = np.argmax(y_sigmoid, axis=-1)
 
 pwk.plot_images(img_test_final, ID_test_final, range(0,200), columns=12, x_size=1, y_size=1, y_pred=ID_pred, save_as='04-predictions')
+"""
 
 
 # In[ ]:
 
 
-pwk.plot_confusion_matrix(ID_test_final,ID_pred,range(11),normalize=True, save_as='06-confusion-matrix')
+#pwk.plot_confusion_matrix(ID_test_final,ID_pred,range(11),normalize=True, save_as='06-confusion-matrix')
 
 
 # In[ ]:
