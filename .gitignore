@@ -16,6 +16,7 @@ foule/
 unnoise/
 *.jpg
 *.png
+*.tif
 
 # iGNORE SCRIPT (for now)
 full convolution.ipynb
